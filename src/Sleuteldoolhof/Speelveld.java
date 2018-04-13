@@ -146,4 +146,22 @@ public class Speelveld {
        
        return grid;
    }
+   
+   /**
+    * Check if new value is within bounds!
+    * 
+    * @param x
+    * @param y
+    * @return 
+    */
+   public boolean checkInBounds(int x, int y) {
+       if((x >= 0) && (x < this.vlakbreedte)){
+           return false;
+       } else
+       if((y >= 0) && (y < this.vlakhoogte)){
+           return false;
+       } else {
+           return true;
+       }
+   }
 }
