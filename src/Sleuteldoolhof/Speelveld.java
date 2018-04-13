@@ -45,6 +45,7 @@ public class Speelveld {
             @Override
             public void keyPressed(KeyEvent e) {
                 /**
+                 * https://stackoverflow.com/a/31637206
                  * left=37
                  * up=38
                  * right=39
@@ -110,8 +111,21 @@ public class Speelveld {
                             System.out.println("oob!");
                         }
                         break;
+                    case 49: // 1
+                        
+                        break;
+                    case 50: // 2
+                        
+                        break;
+                    case 51: // 3
+                        
+                        break;
                     case 65:
                         System.out.println(speler.getXpos()+""+speler.getYpos());
+                        break;
+                    case 82:
+                        System.out.println("Game Reset!");
+                        break;
                     default:
                 }
                 renderCmd(vlakGrid);
@@ -151,7 +165,6 @@ public class Speelveld {
        for(int i=0;i<10;i++) {     
            for(int j=0;j<10;j++) {
                grid[i][j] = new Vlak(i, j);
-               
            }
        }
        
@@ -159,6 +172,8 @@ public class Speelveld {
        grid[0][1].objects.add(new Barricade(10,true));
        grid[0][2].objects.add(new Barricade(10,true));
        grid[0][3].objects.add(new Barricade(10,true));
+       
+       grid[9][9].objects.add(new Barricade(10,true));
        
        return grid;
    }
@@ -184,7 +199,7 @@ public class Speelveld {
             } else {
                 check = false;
             }
-            
+                
         } else {
             check = false;
         }
@@ -192,4 +207,8 @@ public class Speelveld {
        
        return check;
    }
+    public static String checkVlakObject(int x, int y) {
+        
+        return "stest";
+    }
 }
