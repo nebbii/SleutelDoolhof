@@ -35,11 +35,11 @@ public class Speelveld {
             panel.setLayout(new GridLayout(vlakhoogte+2, vlakbreedte, 5, 5));
             panel.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
         /* jframe (grafisch) create einde */
-        Speler speler = new Speler(0,0);
+        Speler speler = new Speler(1,2);
         
         Vlak[][] vlakGrid = loadPuzzle1();
         
-        vlakGrid[1][2].objects.add(new Speler(1,2));
+        vlakGrid[speler.getXpos()][speler.getYpos()].objects.add(speler);
         
         veldframe.addKeyListener(new KeyListener() {
             @Override
@@ -50,18 +50,49 @@ public class Speelveld {
                  * right=39
                  * down=40
                  */
+                int x = speler.getXpos();
+                int y = speler.getYpos();
+                
                 switch(e.getKeyCode()) {
                     case 37: // left
                         System.out.println("Left pressed");
+                        if(vlakGrid[x-1][y].returnTopContent()=='B') {
+                            System.out.println("Boop!");
+                        } else {
+                            speler.setXpos(x-1);
+                            vlakGrid[x][y].objects.remove(speler);
+                            vlakGrid[x-1][y].objects.add(speler);
+                        }
                         break;
                     case 38: // up
-                        System.out.println("Up Pressed");
+                        System.out.println("Up pressed");
+                        if(vlakGrid[x][y-1].returnTopContent()=='B') {
+                            System.out.println("Boop!");
+                        } else {
+                            speler.setYpos(y-1);
+                            vlakGrid[x][y].objects.remove(speler);
+                            vlakGrid[x][y-1].objects.add(speler);
+                        }
                         break;
                     case 39: // right
                         System.out.println("Right pressed");
+                        if(vlakGrid[x+1][y].returnTopContent()=='B') {
+                            System.out.println("Boop!");
+                        } else {
+                            speler.setXpos(x+1);
+                            vlakGrid[x][y].objects.remove(speler);
+                            vlakGrid[x+1][y].objects.add(speler);
+                        }
                         break;
                     case 40: // down
                         System.out.println("Down pressed");
+                        if(vlakGrid[x][y+1].returnTopContent()=='B') {
+                            System.out.println("Boop!");
+                        } else {
+                            speler.setYpos(y+1);
+                            vlakGrid[x][y].objects.remove(speler);
+                            vlakGrid[x][y+1].objects.add(speler);
+                        }
                         break;
                     case 65:
                         System.out.println(speler.getXpos()+""+speler.getYpos());
@@ -92,7 +123,7 @@ public class Speelveld {
    public static void renderCmd(Vlak[][] vlakGrid) {
        for(int i=0;i<10;i++) {     
            for(int j=0;j<10;j++) {
-               System.out.print(vlakGrid[i][j].returnTopContent());
+               System.out.print(vlakGrid[j][i].returnTopContent());
            }
            System.out.println("|");
        } 

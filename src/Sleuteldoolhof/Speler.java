@@ -14,7 +14,7 @@ public class Speler extends VlakObject {
     }
 
     void move(String richting) {
-
+        
     }
 
     void sleutelOppakken(int waarde) {
