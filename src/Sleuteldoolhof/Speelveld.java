@@ -43,21 +43,17 @@ public class Speelveld {
         vlakGrid[1][2].objects.add(new Speler(1,2));
         
         //while(vlakGrid != null) {
-            renderCmd(vlakGrid, speler);
+            renderCmd(vlakGrid);
         //}
         
         // maak vlakken
 
    }  
 
-   public static void renderCmd(Vlak[][] vlakGrid, Speler speler) {
+   public static void renderCmd(Vlak[][] vlakGrid) {
        for(int i=0;i<10;i++) {     
            for(int j=0;j<10;j++) {
-                if(vlakGrid[i][j].objects.contains(speler)) {
-                    System.out.print("S");
-                } else {
-                    System.out.print(".");
-                }
+               System.out.print(vlakGrid[i][j].returnTopContent());
            }
            System.out.println("|");
        } 

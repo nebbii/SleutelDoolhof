@@ -18,4 +18,24 @@ public class Vlak {
         
         return cmdreturn;
    }
+    
+   /**
+    * Geeft het bovenste object terug in char waarde (voor cmd)
+    * 
+    * @return 
+    */
+   public char returnTopContent() {
+       char top = '.';
+       for(VlakObject vlakobj : objects) {
+           if(vlakobj instanceof Barricade) {
+               top = 'B';
+           }
+           else if(vlakobj instanceof Speler) {
+                top = 'S';
+           } else {
+               top = '.';
+           }
+       }
+       return top;
+    }
 }
