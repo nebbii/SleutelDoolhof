@@ -120,10 +120,10 @@ public class Speelveld {
                     case 51: // 3
                         
                         break;
-                    case 65:
+                    case 65: // A
                         System.out.println(speler.getXpos()+""+speler.getYpos());
                         break;
-                    case 82:
+                    case 82: // R
                         System.out.println("Game Reset!");
                         break;
                     default:
@@ -139,7 +139,6 @@ public class Speelveld {
             public void keyReleased(KeyEvent e) {
             }
         });
-        
         // maak vlakken
         
         // start jframe
@@ -173,7 +172,7 @@ public class Speelveld {
        grid[0][2].objects.add(new Barricade(10,true));
        grid[0][3].objects.add(new Barricade(10,true));
        
-       grid[9][9].objects.add(new Barricade(10,true));
+       grid[9][9].objects.add(new Eindveld());
        
        return grid;
    }
@@ -209,6 +208,6 @@ public class Speelveld {
    }
     public static String checkVlakObject(int x, int y) {
         
-        return "stest";
+        return "test";
     }
 }
