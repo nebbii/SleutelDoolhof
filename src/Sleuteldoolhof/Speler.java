@@ -5,8 +5,8 @@ public class Speler extends VlakObject {
     int huidigeSleutel;
 
     public Speler(int x, int y) {
-        this.xpos = x;
-        this.ypos = y;
+        this.setXpos(x);
+        this.setYpos(y);
     }
 
     void openBarricade() {
@@ -20,6 +20,13 @@ public class Speler extends VlakObject {
     void sleutelOppakken(int waarde) {
 
     }
-    
+ 
+    public int getHuidigeSleutel() {
+        return huidigeSleutel;
+    }
+
+    public void setHuidigeSleutel(int huidigeSleutel) {
+        this.huidigeSleutel = huidigeSleutel;
+    }
     
 }

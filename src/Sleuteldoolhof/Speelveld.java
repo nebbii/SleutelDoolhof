@@ -63,6 +63,8 @@ public class Speelveld {
                     case 40: // down
                         System.out.println("Down pressed");
                         break;
+                    case 65:
+                        System.out.println(speler.getXpos()+""+speler.getYpos());
                     default:
                 }
                 renderCmd(vlakGrid);
