@@ -6,8 +6,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.File;
 
-import Sleuteldoolhof.Barricade;
-
 public class Speelveld {
     int vlakbreedte;
     int vlakhoogte;
@@ -35,6 +33,7 @@ public class Speelveld {
             ImageIcon ImgEindvlak   = new ImageIcon(dir+"/Images/Eindvlak.png");
             
             panel.setLayout(new GridLayout(vlakhoogte+2, vlakbreedte, 5, 5));
+            panel.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
         /* jframe (grafisch) create einde */
         Speler speler = new Speler(0,0);
         
@@ -42,12 +41,50 @@ public class Speelveld {
         
         vlakGrid[1][2].objects.add(new Speler(1,2));
         
-        //while(vlakGrid != null) {
-            renderCmd(vlakGrid);
-        //}
+        veldframe.addKeyListener(new KeyListener() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                /**
+                 * left=37
+                 * up=38
+                 * right=39
+                 * down=40
+                 */
+                switch(e.getKeyCode()) {
+                    case 37: // left
+                        System.out.println("Left pressed");
+                        break;
+                    case 38: // up
+                        System.out.println("Up Pressed");
+                        break;
+                    case 39: // right
+                        System.out.println("Right pressed");
+                        break;
+                    case 40: // down
+                        System.out.println("Down pressed");
+                        break;
+                    default:
+                }
+                renderCmd(vlakGrid);
+            }
+
+            @Override
+            public void keyTyped(KeyEvent e) {
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+            }
+        });
         
         // maak vlakken
-
+        
+        // start jframe
+        veldframe.add(panel);
+        
+        veldframe.setVisible(true);
+        veldframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        veldframe.setSize(500, 650);
    }  
 
    public static void renderCmd(Vlak[][] vlakGrid) {
