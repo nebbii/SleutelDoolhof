@@ -249,26 +249,39 @@ public class Speelveld {
         
         if(checkInBounds(nx,ny, vb, vh)) {
             ArrayList<VlakObject> vlakobjects = Speelveld.vlakGrid[nx][ny].getObjects();
-            int heeftBarricade = -1;
-            int heeftVasteMuur = -1;
+            int indexBarricade = -1;
+            int indexVasteMuur = -1;
+            boolean allowMove = false;
             
             for(VlakObject vlakobj : vlakobjects) {
                 if(vlakobj instanceof Barricade) {
-                    heeftBarricade = vlakobjects.indexOf(vlakobj);
+                    indexBarricade = vlakobjects.indexOf(vlakobj);
                 }
                 if(vlakobj instanceof VasteMuur) {
-                    heeftVasteMuur = vlakobjects.indexOf(vlakobj);
+                    indexVasteMuur = vlakobjects.indexOf(vlakobj);
                 }
             }
             
             // Tegen barricade, als sleutel waarde klopt breek barricade
-            if(heeftVasteMuur != -1) {
+            if(indexVasteMuur != -1) {
                 System.out.println("Bots tegen muur!");
             }
-            else if(heeftBarricade != -1) {
+            else if(indexBarricade != -1) {
                 System.out.println("Bots tegen Barricade!");
+                
+                // source: https://stackoverflow.com/a/10259625
+                Barricade b = (Barricade) vlakobjects.get(indexBarricade);
+                if(b.getSlotwaarde() > speler.getHuidigeSleutel()) {
+                    b.setStaat(false);
+                    System.out.println("Speler toegelaten!");
+                    allowMove = true;
+                }
+            } else {
+                allowMove = true;
             }
-            else {
+            
+            // if allowed, move player to new spot
+            if(allowMove) {
                 speler.setXpos(nx);
                 speler.setYpos(ny);
                 vlakGrid[x][y].objects.remove(speler);
