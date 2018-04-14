@@ -9,18 +9,6 @@ public class Speler extends VlakObject {
         this.setYpos(y);
         this.setHuidigeSleutel(0);
     }
-
-    void openBarricade() {
-
-    }
-
-    void move(String richting) {
-        
-    }
-
-    void sleutelOppakken(int waarde) {
-
-    }
  
     public int getHuidigeSleutel() {
         return huidigeSleutel;
