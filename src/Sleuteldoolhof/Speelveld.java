@@ -11,7 +11,7 @@ public class Speelveld {
     int vlakbreedte;
     int vlakhoogte;
     JFrame veldframe;
-    JLabel[][] vlakjlabel;
+    static JLabel[][] vlakjlabel;
     static Vlak[][] vlakGrid;
     
     public static void main(String[] args) {
@@ -26,16 +26,38 @@ public class Speelveld {
             File filepath = new File("src/sleuteldoolhof");
             String dir = filepath.getAbsolutePath();
             String imgpath = dir+"/Images/";
+            
+            System.out.println(imgpath);
 
             // load images
             // Image
-            ImageIcon ImgVasteMuur  = new ImageIcon(dir+"/Images/VasteMuur.png");
-            ImageIcon ImgLeegvlak   = new ImageIcon(dir+"/Images/LeegVlak.png");
-            ImageIcon ImgSpeler     = new ImageIcon(dir+"/Images/speler.png");
-            ImageIcon ImgEindvlak   = new ImageIcon(dir+"/Images/Eindvlak.png");
+            ImageIcon ImgVasteMuur  = new ImageIcon(imgpath+"VasteMuur.png");
+            ImageIcon ImgSleutel  = new ImageIcon(imgpath+"Sleutel.png");
+            ImageIcon ImgLeegvlak   = new ImageIcon(imgpath+"LeegVlak.png");
+            ImageIcon ImgSpeler     = new ImageIcon(imgpath+"Speler.png");
+            ImageIcon ImgEindveld   = new ImageIcon(imgpath+"Eindveld.png");
             
-            panel.setLayout(new GridLayout(vlakhoogte+2, vlakbreedte, 5, 5));
+            System.out.println(ImgVasteMuur.toString());
+            
+            panel.setLayout(new GridLayout(vlakbreedte, vlakhoogte+2, 5, 5));
             panel.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
+        
+            // create jlabel array
+            JLabel vlakjlabel[][] = new JLabel[10][10];
+
+            // place jlabels in grid
+            for(int i=0;i < vlakbreedte; i++) {
+                for(int j=0; j < vlakhoogte; j++) {
+                    vlakjlabel[j][i] = new JLabel(i+"-"+j);
+                }
+            }
+            
+            for(int i=0;i < vlakbreedte; i++) {
+                for(int j=0; j < vlakhoogte; j++) {
+                    panel.add(vlakjlabel[i][j]);
+                }
+            }
+            
         /* jframe (grafisch) create einde */
         Speler speler = new Speler(1,1);
         
@@ -99,6 +121,37 @@ public class Speelveld {
                     loadPuzzle1(speler);
                 }
                 renderCmd(vlakGrid);
+                for(int i=0;i < vlakbreedte; i++) {
+                    for(int j=0; j < vlakhoogte; j++) {
+                         switch(vlakGrid[i][j].returnTopContent()) {
+                            case 'V':
+                                vlakjlabel[j][i].setText("V");
+                                vlakjlabel[j][i].setIcon(ImgVasteMuur);
+                                break;
+                            case 'B':
+                                vlakjlabel[j][i].setText("B");
+                                vlakjlabel[j][i].setIcon(ImgVasteMuur);
+                                break;
+                            case 'b':
+                                vlakjlabel[j][i].setText("b");
+                                vlakjlabel[j][i].setIcon(ImgVasteMuur);
+                                break;
+                            case 'S':
+                                vlakjlabel[j][i].setText("S");
+                                vlakjlabel[j][i].setIcon(ImgSleutel);
+                                break;
+                            case 'E':
+                                vlakjlabel[j][i].setText("E");
+                                vlakjlabel[j][i].setIcon(ImgEindveld);
+                                break;
+                            case '.':
+                                vlakjlabel[j][i].setText(".");
+                                vlakjlabel[j][i].setIcon(ImgLeegvlak);
+                                break;
+                            default:
+                        }
+                    }
+                }
             }
 
             @Override
@@ -127,6 +180,10 @@ public class Speelveld {
            System.out.println("|");
        } 
    }
+   
+   /*public static void renderFrame(int vb, int vh) {
+       
+   }*/
     
    public static void loadPuzzle1(Speler speler) {
        Vlak[][] grid = new Vlak[10][10]; 
