@@ -123,26 +123,43 @@ public class Speelveld {
                 renderCmd(vlakGrid);
                 for(int i=0;i < vlakbreedte; i++) {
                     for(int j=0; j < vlakhoogte; j++) {
-                         switch(vlakGrid[i][j].returnTopContent()) {
+                        int waarde = 0; 
+                        switch(vlakGrid[i][j].returnTopContent()) {
                             case 'V':
 //                                vlakjlabel[j][i].setText("V");
                                 vlakjlabel[j][i].setIcon(ImgVasteMuur);
                                 break;
                             case 'B':
-//                                vlakjlabel[j][i].setText("B");
+                                for(VlakObject vlakobj : vlakGrid[i][j].objects) {
+                                    if(vlakobj instanceof Barricade) {
+                                        waarde = ((Barricade) vlakobj).getSlotwaarde();
+                                    }
+                                }
                                 vlakjlabel[j][i].setIcon(ImgBarricade);
+                                vlakjlabel[j][i].setText("<html><font color='white'>"+waarde+"</font></html>");
+                                vlakjlabel[j][i].setHorizontalTextPosition(JLabel.CENTER);
                                 break;
                             case 'b':
-//                                vlakjlabel[j][i].setText("b");
+                                vlakjlabel[j][i].setText("");
                                 vlakjlabel[j][i].setIcon(ImgBroken);
                                 break;
                             case 'S':
 //                                vlakjlabel[j][i].setText("S");
                                 vlakjlabel[j][i].setIcon(ImgSpeler);
+                                if(speler.getHuidigeSleutel() > 0) {
+                                    vlakjlabel[j][i].setText("<html><font color='white'>"+speler.getHuidigeSleutel()+"</font></html>");
+                                    vlakjlabel[j][i].setHorizontalTextPosition(JLabel.CENTER);
+                                }
                                 break;
                             case 's':
-//                                vlakjlabel[j][i].setText("s");
+                                for(VlakObject vlakobj : vlakGrid[i][j].objects) {
+                                    if(vlakobj instanceof Sleutel) {
+                                        waarde = ((Sleutel) vlakobj).getWaarde();
+                                    }
+                                }
                                 vlakjlabel[j][i].setIcon(ImgSleutel);
+                                vlakjlabel[j][i].setText("<html><font color='white'>"+waarde+"</font></html>");
+                                vlakjlabel[j][i].setHorizontalTextPosition(JLabel.CENTER);
                                 break;
                             case 'E':
 //                                vlakjlabel[j][i].setText("E");
@@ -166,42 +183,6 @@ public class Speelveld {
             public void keyReleased(KeyEvent e) {
             }
         });
-        // initial image placement
-            for(int i=0;i < vlakbreedte; i++) {
-                for(int j=0; j < vlakhoogte; j++) {
-                     switch(vlakGrid[i][j].returnTopContent()) {
-                        case 'V':
-    //                                vlakjlabel[j][i].setText("V");
-                            vlakjlabel[j][i].setIcon(ImgVasteMuur);
-                            break;
-                        case 'B':
-    //                                vlakjlabel[j][i].setText("B");
-                            vlakjlabel[j][i].setIcon(ImgBarricade);
-                            break;
-                        case 'b':
-    //                                vlakjlabel[j][i].setText("b");
-                            vlakjlabel[j][i].setIcon(ImgBroken);
-                            break;
-                        case 'S':
-    //                                vlakjlabel[j][i].setText("S");
-                            vlakjlabel[j][i].setIcon(ImgSpeler);
-                            break;
-                        case 's':
-    //                                vlakjlabel[j][i].setText("s");
-                            vlakjlabel[j][i].setIcon(ImgSleutel);
-                            break;
-                        case 'E':
-    //                                vlakjlabel[j][i].setText("E");
-                            vlakjlabel[j][i].setIcon(ImgEindveld);
-                            break;
-                        case '.':
-    //                                vlakjlabel[j][i].setText(".");
-                            vlakjlabel[j][i].setIcon(ImgLeegvlak);
-                            break;
-                        default:
-                    }
-                }
-            }
         
         // start jframe
         veldframe.add(panel);
@@ -381,7 +362,7 @@ public class Speelveld {
                 allowMove = true;
             }
             
-            // if allowed, move player to new spot
+            // als toegestaan, verplaats de speler
             if(allowMove) {
                 speler.setXpos(nx);
                 speler.setYpos(ny);
