@@ -271,9 +271,10 @@ public class Speelveld {
                 
                 // source: https://stackoverflow.com/a/10259625
                 Barricade b = (Barricade) vlakobjects.get(indexBarricade);
-                if(b.getSlotwaarde() > speler.getHuidigeSleutel()) {
+                if(b.getSlotwaarde() <= speler.getHuidigeSleutel()) {
                     b.setStaat(false);
-                    System.out.println("Speler toegelaten!");
+                    allowMove = true;
+                } else if (!b.isStaat()) {
                     allowMove = true;
                 }
             } else {
