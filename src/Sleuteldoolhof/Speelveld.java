@@ -154,41 +154,19 @@ public class Speelveld {
      * 
      * @return 
      */
-    public static boolean checkWin(int vb, int vh) {
-        int eind_x = -1; 
-        int eind_y = -1;
+    public static boolean checkWin(Speler speler) {
+        boolean win = false;
         
-        int speler_x = -2; 
-        int speler_y = -2;
+        int speler_x = speler.getXpos();
+        int speler_y = speler.getYpos();
         
-        // vind eindvlak
-        for(int i=0;i<vb;i++) {
-            for(int j=0;j<vh;j++) {
-                for(VlakObject vlakobj : vlakGrid[i][j].objects) {
-                    if(vlakobj instanceof Eindveld) {
-                        eind_x = vlakobj.getXpos();
-                        eind_y = vlakobj.getYpos();
-                        System.out.println("eindveld found at "+eind_x+eind_y);
-                    }
-                }
+        for(VlakObject vlakobj : vlakGrid[speler_x][speler_y].objects) {
+            if(vlakobj instanceof Eindveld) {
+                win = true;
             }
         }
         
-        // vind speler
-        for(int i=0;i<vb;i++) {
-            for(int j=0;j<vh;j++) {
-                for(VlakObject vlakobj : vlakGrid[i][j].objects) {
-                    if(vlakobj instanceof Speler) {
-                        speler_x = vlakobj.getXpos();
-                        speler_y = vlakobj.getYpos();
-                        System.out.println("speler found at "+speler_x+speler_y);
-                    }
-                }
-            }
-        }
-        
-        // return true if line up
-        return ((eind_x==speler_x) && (eind_y==speler_y));
+        return win;
     }
     
     public static void checkSleutelOppakken(Speler speler) {
@@ -215,11 +193,9 @@ public class Speelveld {
        
         // check horizontal
         if((x >= 0) && (x < vb)) {
-            System.out.println("horizontally good!");
             
             // check vertical
             if((y >= 0) && (y < vh)) {
-                System.out.println("vertically good!");
                  check = true;
             } else {
                 check = false;
