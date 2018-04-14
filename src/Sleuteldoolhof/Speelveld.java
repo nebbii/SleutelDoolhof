@@ -89,8 +89,11 @@ public class Speelveld {
                         break;
                     default:
                 }
+                // check voor sleutel
                 checkSleutelOppakken(speler);
-                if(checkWin(vlakbreedte,vlakhoogte)) {
+                
+                // check voor win condities
+                if(checkWin(speler)) {
                     System.out.println("WIN!!!");
                     loadPuzzle1(speler);
                 }
@@ -169,6 +172,11 @@ public class Speelveld {
         return win;
     }
     
+    /**
+     * check of speler op een sleutel staat, pak op als dat zo is
+     * 
+     * @param speler 
+     */
     public static void checkSleutelOppakken(Speler speler) {
         int speler_x = speler.getXpos();
         int speler_y = speler.getYpos();
