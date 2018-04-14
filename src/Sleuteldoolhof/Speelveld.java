@@ -28,6 +28,8 @@ public class Speelveld {
             String imgpath = dir+"/Images/";
 
             // load images
+            ImageIcon ImgBarricade  = new ImageIcon(imgpath+"Barricade.png");
+            ImageIcon ImgBroken     = new ImageIcon(imgpath+"Broken.png");
             ImageIcon ImgVasteMuur  = new ImageIcon(imgpath+"VasteMuur.png");
             ImageIcon ImgSleutel    = new ImageIcon(imgpath+"Sleutel.png");
             ImageIcon ImgLeegvlak   = new ImageIcon(imgpath+"LeegVlak.png");
@@ -123,31 +125,31 @@ public class Speelveld {
                     for(int j=0; j < vlakhoogte; j++) {
                          switch(vlakGrid[i][j].returnTopContent()) {
                             case 'V':
-                                vlakjlabel[j][i].setText("V");
+//                                vlakjlabel[j][i].setText("V");
                                 vlakjlabel[j][i].setIcon(ImgVasteMuur);
                                 break;
                             case 'B':
-                                vlakjlabel[j][i].setText("B");
-                                vlakjlabel[j][i].setIcon(ImgVasteMuur);
+//                                vlakjlabel[j][i].setText("B");
+                                vlakjlabel[j][i].setIcon(ImgBarricade);
                                 break;
                             case 'b':
-                                vlakjlabel[j][i].setText("b");
-                                vlakjlabel[j][i].setIcon(ImgVasteMuur);
+//                                vlakjlabel[j][i].setText("b");
+                                vlakjlabel[j][i].setIcon(ImgBroken);
                                 break;
                             case 'S':
-                                vlakjlabel[j][i].setText("S");
+//                                vlakjlabel[j][i].setText("S");
                                 vlakjlabel[j][i].setIcon(ImgSpeler);
                                 break;
                             case 's':
-                                vlakjlabel[j][i].setText("s");
+//                                vlakjlabel[j][i].setText("s");
                                 vlakjlabel[j][i].setIcon(ImgSleutel);
                                 break;
                             case 'E':
-                                vlakjlabel[j][i].setText("E");
+//                                vlakjlabel[j][i].setText("E");
                                 vlakjlabel[j][i].setIcon(ImgEindveld);
                                 break;
                             case '.':
-                                vlakjlabel[j][i].setText(".");
+//                                vlakjlabel[j][i].setText(".");
                                 vlakjlabel[j][i].setIcon(ImgLeegvlak);
                                 break;
                             default:
@@ -164,14 +166,49 @@ public class Speelveld {
             public void keyReleased(KeyEvent e) {
             }
         });
-        // maak vlakken
+        // initial image placement
+            for(int i=0;i < vlakbreedte; i++) {
+                for(int j=0; j < vlakhoogte; j++) {
+                     switch(vlakGrid[i][j].returnTopContent()) {
+                        case 'V':
+    //                                vlakjlabel[j][i].setText("V");
+                            vlakjlabel[j][i].setIcon(ImgVasteMuur);
+                            break;
+                        case 'B':
+    //                                vlakjlabel[j][i].setText("B");
+                            vlakjlabel[j][i].setIcon(ImgBarricade);
+                            break;
+                        case 'b':
+    //                                vlakjlabel[j][i].setText("b");
+                            vlakjlabel[j][i].setIcon(ImgBroken);
+                            break;
+                        case 'S':
+    //                                vlakjlabel[j][i].setText("S");
+                            vlakjlabel[j][i].setIcon(ImgSpeler);
+                            break;
+                        case 's':
+    //                                vlakjlabel[j][i].setText("s");
+                            vlakjlabel[j][i].setIcon(ImgSleutel);
+                            break;
+                        case 'E':
+    //                                vlakjlabel[j][i].setText("E");
+                            vlakjlabel[j][i].setIcon(ImgEindveld);
+                            break;
+                        case '.':
+    //                                vlakjlabel[j][i].setText(".");
+                            vlakjlabel[j][i].setIcon(ImgLeegvlak);
+                            break;
+                        default:
+                    }
+                }
+            }
         
         // start jframe
         veldframe.add(panel);
         
         veldframe.setVisible(true);
         veldframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        veldframe.setSize(500, 650);
+        veldframe.setSize(700, 700);
    }  
 
    public static void renderCmd(Vlak[][] vlakGrid) {
