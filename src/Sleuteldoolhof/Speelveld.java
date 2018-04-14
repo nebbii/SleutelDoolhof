@@ -89,6 +89,7 @@ public class Speelveld {
                         break;
                     default:
                 }
+                checkSleutelOppakken(speler);
                 if(checkWin(vlakbreedte,vlakhoogte)) {
                     System.out.println("WIN!!!");
                     loadPuzzle1(speler);
@@ -142,6 +143,7 @@ public class Speelveld {
        grid[0][3].objects.add(new Barricade(10,true));
        grid[0][4].objects.add(new Barricade(10,true));
        
+       grid[4][4].objects.add(new Sleutel(4,4, 10));
        grid[9][9].objects.add(new Eindveld(9,9));
        
        Speelveld.vlakGrid = grid;
@@ -187,6 +189,18 @@ public class Speelveld {
         
         // return true if line up
         return ((eind_x==speler_x) && (eind_y==speler_y));
+    }
+    
+    public static void checkSleutelOppakken(Speler speler) {
+        int speler_x = speler.getXpos();
+        int speler_y = speler.getYpos();
+        
+        for(VlakObject vlakobj : vlakGrid[speler_x][speler_y].objects) {
+            if(vlakobj instanceof Sleutel) {
+                System.out.println("Sleutel opgepakt!");
+                speler.setHuidigeSleutel(((Sleutel) vlakobj).getWaarde());
+            }
+        }
     }
    
     /**

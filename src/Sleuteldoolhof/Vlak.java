@@ -30,14 +30,14 @@ public class Vlak {
            if(vlakobj instanceof Barricade) {
                top = 'B';
            }
-           else if(vlakobj instanceof Eindveld) {
+           if(vlakobj instanceof Eindveld) {
                 top = 'E';
            }
-           else if(vlakobj instanceof Speler) {
-                top = 'S';
+           if(vlakobj instanceof Sleutel) {
+                top = 's';
            }
-           else {
-               top = '.';
+           if(vlakobj instanceof Speler) {
+                top = 'S';
            }
        }
        return top;
