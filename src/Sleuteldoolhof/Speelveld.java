@@ -53,6 +53,8 @@ public class Speelveld {
                  */
                 int x = speler.getXpos();
                 int y = speler.getYpos();
+                int[] arrows = new int[4];
+                arrows[0] = 37; arrows[1] = 38; arrows[2] = 39; arrows[3] = 40;
                 
                 switch(e.getKeyCode()) {
                     case 37: // left
@@ -128,7 +130,6 @@ public class Speelveld {
                         break;
                     default:
                 }
-                renderCmd(vlakGrid);
             }
 
             @Override
@@ -171,11 +172,23 @@ public class Speelveld {
        grid[0][1].objects.add(new Barricade(10,true));
        grid[0][2].objects.add(new Barricade(10,true));
        grid[0][3].objects.add(new Barricade(10,true));
+       grid[0][4].objects.add(new Barricade(10,true));
        
        grid[9][9].objects.add(new Eindveld());
        
        return grid;
    }
+   
+    /**
+     * Returns true als speler en eindvlak op dezelfde plek staan!
+     * 
+     * @param eind
+     * @param speler
+     * @return 
+     */
+    public static boolean checkWin(Eindveld eind, Speler speler) {
+        return ((eind.getXpos()==speler.getXpos()) && (eind.getYpos()==speler.getYpos()));
+    }
    
     /**
      * Check if new value is within bounds!
@@ -206,8 +219,5 @@ public class Speelveld {
        
        return check;
    }
-    public static String checkVlakObject(int x, int y) {
-        
-        return "test";
-    }
+    
 }
