@@ -11,7 +11,8 @@ package Sleuteldoolhof;
  */
 public class Eindveld extends VlakObject {
     
-    public Eindveld() {
-        
+    public Eindveld(int x, int y) {
+        this.setXpos(x);
+        this.setYpos(y);
     }
 }

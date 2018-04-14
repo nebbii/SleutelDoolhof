@@ -58,59 +58,19 @@ public class Speelveld {
                 switch(e.getKeyCode()) {
                     case 37: // left
                         System.out.println("Left pressed");
-                        if(checkInBounds(x-1,y, vlakbreedte, vlakhoogte)) {
-                            if(vlakGrid[x-1][y].returnTopContent()=='B') {
-                                System.out.println("Boop!");
-                            } else {
-                                speler.setXpos(x-1);
-                                vlakGrid[x][y].objects.remove(speler);
-                                vlakGrid[x-1][y].objects.add(speler);
-                            }
-                        } else {
-                            System.out.println("oob!");
-                        }
+                        moveSpeler(speler, "left", vlakbreedte, vlakhoogte);
                         break;
                     case 38: // up
                         System.out.println("Up pressed");
-                        if(checkInBounds(x,y-1, vlakbreedte, vlakhoogte)) {
-                            if(vlakGrid[x][y-1].returnTopContent()=='B') {
-                                System.out.println("Boop!");
-                            } else {
-                                speler.setYpos(y-1);
-                                vlakGrid[x][y].objects.remove(speler);
-                                vlakGrid[x][y-1].objects.add(speler);
-                            }
-                        } else {
-                            System.out.println("oob!");
-                        }
+                        moveSpeler(speler, "up", vlakbreedte, vlakhoogte);
                         break;
                     case 39: // right
                         System.out.println("Right pressed");
-                        if(checkInBounds(x+1,y, vlakbreedte, vlakhoogte)) {
-                            if(vlakGrid[x+1][y].returnTopContent()=='B') {
-                                System.out.println("Boop!");
-                            } else {
-                                speler.setXpos(x+1);
-                                vlakGrid[x][y].objects.remove(speler);
-                                vlakGrid[x+1][y].objects.add(speler);
-                            }
-                        } else {
-                            System.out.println("oob!");
-                        }
+                        moveSpeler(speler, "right", vlakbreedte, vlakhoogte);
                         break;
                     case 40: // down
                         System.out.println("Down pressed");
-                        if(checkInBounds(x,y+1, vlakbreedte, vlakhoogte)) {
-                            if(vlakGrid[x][y+1].returnTopContent()=='B') {
-                                System.out.println("Boop!");
-                            } else {
-                                speler.setYpos(y+1);
-                                vlakGrid[x][y].objects.remove(speler);
-                                vlakGrid[x][y+1].objects.add(speler);
-                            }
-                        } else {
-                            System.out.println("oob!");
-                        }
+                        moveSpeler(speler, "down", vlakbreedte, vlakhoogte);
                         break;
                     case 49: // 1
                         Speelveld.loadPuzzle1(speler);
@@ -128,6 +88,10 @@ public class Speelveld {
                         System.out.println("Game Reset!");
                         break;
                     default:
+                }
+                if(checkWin(vlakbreedte,vlakhoogte)) {
+                    System.out.println("WIN!!!");
+                    loadPuzzle1(speler);
                 }
                 renderCmd(vlakGrid);
             }
@@ -178,7 +142,7 @@ public class Speelveld {
        grid[0][3].objects.add(new Barricade(10,true));
        grid[0][4].objects.add(new Barricade(10,true));
        
-       grid[9][9].objects.add(new Eindveld());
+       grid[9][9].objects.add(new Eindveld(9,9));
        
        Speelveld.vlakGrid = grid;
    }
@@ -186,12 +150,43 @@ public class Speelveld {
     /**
      * Returns true als speler en eindvlak op dezelfde plek staan!
      * 
-     * @param eind
-     * @param speler
      * @return 
      */
-    public static boolean checkWin(Eindveld eind, Speler speler) {
-        return ((eind.getXpos()==speler.getXpos()) && (eind.getYpos()==speler.getYpos()));
+    public static boolean checkWin(int vb, int vh) {
+        int eind_x = -1; 
+        int eind_y = -1;
+        
+        int speler_x = -2; 
+        int speler_y = -2;
+        
+        // vind eindvlak
+        for(int i=0;i<vb;i++) {
+            for(int j=0;j<vh;j++) {
+                for(VlakObject vlakobj : vlakGrid[i][j].objects) {
+                    if(vlakobj instanceof Eindveld) {
+                        eind_x = vlakobj.getXpos();
+                        eind_y = vlakobj.getYpos();
+                        System.out.println("eindveld found at "+eind_x+eind_y);
+                    }
+                }
+            }
+        }
+        
+        // vind speler
+        for(int i=0;i<vb;i++) {
+            for(int j=0;j<vh;j++) {
+                for(VlakObject vlakobj : vlakGrid[i][j].objects) {
+                    if(vlakobj instanceof Speler) {
+                        speler_x = vlakobj.getXpos();
+                        speler_y = vlakobj.getYpos();
+                        System.out.println("speler found at "+speler_x+speler_y);
+                    }
+                }
+            }
+        }
+        
+        // return true if line up
+        return ((eind_x==speler_x) && (eind_y==speler_y));
     }
    
     /**
@@ -223,5 +218,48 @@ public class Speelveld {
        
        return check;
    }
+    
+    /**
+     * Verplaats speler over speelveld
+     * 
+     * @param speler
+     * @param richting
+     * @param vb
+     * @param vh 
+     */
+    public static void moveSpeler(Speler speler, String richting, int vb, int vh) {
+        int x; int y; int nx; int ny;
+        
+        x = nx = speler.getXpos();
+        y = ny = speler.getYpos();
+        
+        switch(richting) {
+            case "left":
+                nx--;
+                break;
+            case "up":
+                ny--;
+                break;
+            case "right":
+                nx++;
+                break;
+            case "down":
+                ny++;
+                break;
+        }
+        
+        if(checkInBounds(nx,ny, vb, vh)) {
+            if(Speelveld.vlakGrid[nx][ny].returnTopContent()=='B') {
+                System.out.println("Boop!");
+            } else {
+                speler.setXpos(nx);
+                speler.setYpos(ny);
+                vlakGrid[x][y].objects.remove(speler);
+                vlakGrid[nx][ny].objects.add(speler);
+            }
+        } else {
+            System.out.println("oob!");
+        }
+    }
     
 }
