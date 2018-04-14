@@ -11,7 +11,8 @@ public class Speelveld {
     int vlakhoogte;
     JFrame veldframe;
     JLabel[][] vlakjlabel;
-
+    static Vlak[][] vlakGrid;
+    
     public static void main(String[] args) {
         int vlakbreedte = 10;
         int vlakhoogte = 10;
@@ -35,11 +36,9 @@ public class Speelveld {
             panel.setLayout(new GridLayout(vlakhoogte+2, vlakbreedte, 5, 5));
             panel.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
         /* jframe (grafisch) create einde */
-        Speler speler = new Speler(1,2);
+        Speler speler = new Speler(1,1);
         
-        Vlak[][] vlakGrid = loadPuzzle1();
-        
-        vlakGrid[speler.getXpos()][speler.getYpos()].objects.add(speler);
+        loadPuzzle1(speler);
         
         veldframe.addKeyListener(new KeyListener() {
             @Override
@@ -114,7 +113,7 @@ public class Speelveld {
                         }
                         break;
                     case 49: // 1
-                        
+                        Speelveld.loadPuzzle1(speler);
                         break;
                     case 50: // 2
                         
@@ -130,6 +129,7 @@ public class Speelveld {
                         break;
                     default:
                 }
+                renderCmd(vlakGrid);
             }
 
             @Override
@@ -159,7 +159,7 @@ public class Speelveld {
        } 
    }
     
-   public static Vlak[][] loadPuzzle1() {
+   public static void loadPuzzle1(Speler speler) {
        Vlak[][] grid = new Vlak[10][10]; 
 
        for(int i=0;i<10;i++) {     
@@ -167,6 +167,10 @@ public class Speelveld {
                grid[i][j] = new Vlak(i, j);
            }
        }
+       
+       speler.setXpos(1); speler.setYpos(2);
+       
+       grid[speler.getXpos()][speler.getYpos()].objects.add(speler);
        
        grid[0][0].objects.add(new Barricade(10,true));
        grid[0][1].objects.add(new Barricade(10,true));
@@ -176,7 +180,7 @@ public class Speelveld {
        
        grid[9][9].objects.add(new Eindveld());
        
-       return grid;
+       Speelveld.vlakGrid = grid;
    }
    
     /**
