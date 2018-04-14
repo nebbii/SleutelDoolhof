@@ -32,7 +32,12 @@ public class Vlak {
                 top = 'S';
            }
            if(vlakobj instanceof Barricade) {
-               top = 'B';
+               boolean heel = ((Barricade) vlakobj).isStaat();
+               if(heel) {
+                 top = 'B';
+               } else {
+                 top = 'b';
+               }
            }
            if(vlakobj instanceof VasteMuur) {
                 top = 'V';

@@ -95,7 +95,7 @@ public class Speelveld {
                 
                 // check voor win condities
                 if(checkWin(speler)) {
-                    System.out.println("WIN!!!");
+                    System.out.println("Doolhof gehaald!!!");
                     loadPuzzle1(speler);
                 }
                 renderCmd(vlakGrid);
@@ -141,13 +141,17 @@ public class Speelveld {
        
        grid[speler.getXpos()][speler.getYpos()].objects.add(speler);
        
-       grid[0][0].objects.add(new Barricade(10,true));
-       grid[0][1].objects.add(new Barricade(10,true));
-       grid[0][2].objects.add(new Barricade(10,true));
-       grid[0][3].objects.add(new Barricade(10,true));
-       grid[0][4].objects.add(new Barricade(10,true));
+       grid[0][0].objects.add(new VasteMuur());
+       grid[0][1].objects.add(new VasteMuur());
+       grid[0][2].objects.add(new VasteMuur());
+       grid[0][3].objects.add(new VasteMuur());
+       grid[0][4].objects.add(new VasteMuur());
        
-       grid[4][4].objects.add(new Sleutel(4,4, 10));
+       for(int i=0;i<10;i++) {
+           grid[4][i].objects.add(new Barricade(20,true));
+       }
+       
+       grid[2][9].objects.add(new Sleutel(2,2, 20));
        grid[9][9].objects.add(new Eindveld(9,9));
        
        Speelveld.vlakGrid = grid;

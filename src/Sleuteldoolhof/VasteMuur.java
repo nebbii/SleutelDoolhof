@@ -11,9 +11,5 @@ package Sleuteldoolhof;
  */
 public class VasteMuur extends VlakObject {
     
-    public VasteMuur(int x, int y) {
-        this.setXpos(x);
-        this.setYpos(y);
-    }
     
 }
