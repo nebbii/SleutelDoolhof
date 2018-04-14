@@ -5,6 +5,7 @@ import javax.swing.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.File;
+import java.util.ArrayList;
 
 public class Speelveld {
     int vlakbreedte;
@@ -247,9 +248,27 @@ public class Speelveld {
         }
         
         if(checkInBounds(nx,ny, vb, vh)) {
-            if(Speelveld.vlakGrid[nx][ny].returnTopContent()=='B') {
-                System.out.println("Boop!");
-            } else {
+            ArrayList<VlakObject> vlakobjects = Speelveld.vlakGrid[nx][ny].getObjects();
+            int heeftBarricade = -1;
+            int heeftVasteMuur = -1;
+            
+            for(VlakObject vlakobj : vlakobjects) {
+                if(vlakobj instanceof Barricade) {
+                    heeftBarricade = vlakobjects.indexOf(vlakobj);
+                }
+                if(vlakobj instanceof VasteMuur) {
+                    heeftVasteMuur = vlakobjects.indexOf(vlakobj);
+                }
+            }
+            
+            // Tegen barricade, als sleutel waarde klopt breek barricade
+            if(heeftVasteMuur != -1) {
+                System.out.println("Bots tegen muur!");
+            }
+            else if(heeftBarricade != -1) {
+                System.out.println("Bots tegen Barricade!");
+            }
+            else {
                 speler.setXpos(nx);
                 speler.setYpos(ny);
                 vlakGrid[x][y].objects.remove(speler);
