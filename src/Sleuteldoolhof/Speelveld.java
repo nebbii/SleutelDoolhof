@@ -23,7 +23,7 @@ public class Speelveld {
             JPanel panel = new JPanel();
             
             // pad maken voor de afbeeldingen
-            File filepath = new File("src/sleuteldoolhof");
+            File filepath = new File("src/Sleuteldoolhof");
             String dir = filepath.getAbsolutePath();
             String imgpath = dir+"/Images/";
 
@@ -33,6 +33,9 @@ public class Speelveld {
             ImageIcon ImgLeegvlak   = new ImageIcon(imgpath+"LeegVlak.png");
             ImageIcon ImgSpeler     = new ImageIcon(imgpath+"Speler.png");
             ImageIcon ImgEindveld   = new ImageIcon(imgpath+"Eindveld.png");
+            
+            System.out.println(imgpath);
+            System.out.println(ImgVasteMuur.getIconWidth());
             
             panel.setLayout(new GridLayout(vlakbreedte, vlakhoogte+2, 5, 5));
             panel.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
