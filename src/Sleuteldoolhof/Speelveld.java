@@ -26,18 +26,13 @@ public class Speelveld {
             File filepath = new File("src/sleuteldoolhof");
             String dir = filepath.getAbsolutePath();
             String imgpath = dir+"/Images/";
-            
-            System.out.println(imgpath);
 
             // load images
-            // Image
             ImageIcon ImgVasteMuur  = new ImageIcon(imgpath+"VasteMuur.png");
-            ImageIcon ImgSleutel  = new ImageIcon(imgpath+"Sleutel.png");
+            ImageIcon ImgSleutel    = new ImageIcon(imgpath+"Sleutel.png");
             ImageIcon ImgLeegvlak   = new ImageIcon(imgpath+"LeegVlak.png");
             ImageIcon ImgSpeler     = new ImageIcon(imgpath+"Speler.png");
             ImageIcon ImgEindveld   = new ImageIcon(imgpath+"Eindveld.png");
-            
-            System.out.println(ImgVasteMuur.toString());
             
             panel.setLayout(new GridLayout(vlakbreedte, vlakhoogte+2, 5, 5));
             panel.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
@@ -48,7 +43,7 @@ public class Speelveld {
             // place jlabels in grid
             for(int i=0;i < vlakbreedte; i++) {
                 for(int j=0; j < vlakhoogte; j++) {
-                    vlakjlabel[j][i] = new JLabel(i+"-"+j);
+                    vlakjlabel[j][i] = new JLabel(ImgVasteMuur);
                 }
             }
             
@@ -138,6 +133,10 @@ public class Speelveld {
                                 break;
                             case 'S':
                                 vlakjlabel[j][i].setText("S");
+                                vlakjlabel[j][i].setIcon(ImgSpeler);
+                                break;
+                            case 's':
+                                vlakjlabel[j][i].setText("s");
                                 vlakjlabel[j][i].setIcon(ImgSleutel);
                                 break;
                             case 'E':
