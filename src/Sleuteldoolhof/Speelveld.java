@@ -214,21 +214,28 @@ public class Speelveld {
            }
        }
        
-       speler.setXpos(1); speler.setYpos(2);
+       speler.setXpos(0); speler.setYpos(0);
        
        grid[speler.getXpos()][speler.getYpos()].objects.add(speler);
        
-       grid[0][0].objects.add(new VasteMuur());
-       grid[0][1].objects.add(new VasteMuur());
-       grid[0][2].objects.add(new VasteMuur());
-       grid[0][3].objects.add(new VasteMuur());
-       grid[0][4].objects.add(new VasteMuur());
+       // Creating!
        
-       for(int i=0;i<10;i++) {
-           grid[4][i].objects.add(new Barricade(20,true));
+       grid[1][0].objects.add(new VasteMuur());
+       grid[2][0].objects.add(new VasteMuur());
+       
+       for(int i=2;i<10;i++) {
+           grid[1][i].objects.add(new VasteMuur());
+       }
+       for(int i=2;i<10;i++) {
+           grid[2][i].objects.add(new Barricade(100, true));
        }
        
-       grid[2][9].objects.add(new Sleutel(2,2, 20));
+       for(int i=2;i<10;i++) {
+           grid[2][i].objects.add(new Barricade(100,true));
+       }
+       
+       grid[0][8].objects.add(new Sleutel(0, 8, 200));
+       
        grid[9][9].objects.add(new Eindveld(9,9));
        
        Speelveld.vlakGrid = grid;
