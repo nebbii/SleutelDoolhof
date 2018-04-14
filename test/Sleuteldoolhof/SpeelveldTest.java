@@ -38,120 +38,94 @@ public class SpeelveldTest {
     }
 
     /**
-     * Test of main method, of class Speelveld.
+     * Test of checkInBounds method, of class Speelveld.
      */
     @Test
-    public void testMain() {
-        System.out.println("main");
-        String[] args = null;
-        Speelveld.main(args);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of reset method, of class Speelveld.
-     */
-    @Test
-    public void testReset() {
-        System.out.println("reset");
-        Speelveld.reset();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of renderCmd method, of class Speelveld.
-     */
-    @Test
-    public void testRenderCmd() {
-        System.out.println("renderCmd");
-        Vlak[][] vlakGrid = null;
-        Speelveld.renderCmd(vlakGrid);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of loadPuzzle1 method, of class Speelveld.
-     */
-    @Test
-    public void testLoadPuzzle1() {
-        System.out.println("loadPuzzle1");
-        Speler speler = null;
-        Speelveld.loadPuzzle1(speler);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of loadPuzzle2 method, of class Speelveld.
-     */
-    @Test
-    public void testLoadPuzzle2() {
-        System.out.println("loadPuzzle2");
-        Speler speler = null;
-        Speelveld.loadPuzzle2(speler);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of checkWin method, of class Speelveld.
-     */
-    @Test
-    public void testCheckWin() {
-        System.out.println("checkWin");
-        Speler speler = null;
+    public void testCheckInBoundsMinusX() {
+        System.out.println("checkInBounds");
+        int x = -2;
+        int y = 0;
+        int vb = 10;
+        int vh = 10;
         boolean expResult = false;
-        boolean result = Speelveld.checkWin(speler);
+        boolean result = Speelveld.checkInBounds(x, y, vb, vh);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
-
-    /**
-     * Test of checkSleutelOppakken method, of class Speelveld.
-     */
-    @Test
-    public void testCheckSleutelOppakken() {
-        System.out.println("checkSleutelOppakken");
-        Speler speler = null;
-        Speelveld.checkSleutelOppakken(speler);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
+    
     /**
      * Test of checkInBounds method, of class Speelveld.
      */
     @Test
-    public void testCheckInBounds() {
+    public void testCheckInBoundsMinusY() {
         System.out.println("checkInBounds");
-        int x = 0;
-        int y = 0;
-        int vb = 0;
-        int vh = 0;
+        int x = 3;
+        int y = 11;
+        int vb = 10;
+        int vh = 10;
         boolean expResult = false;
         boolean result = Speelveld.checkInBounds(x, y, vb, vh);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of moveSpeler method, of class Speelveld.
-     */
-    @Test
-    public void testMoveSpeler() {
-        System.out.println("moveSpeler");
-        Speler speler = null;
-        String richting = "";
-        int vb = 0;
-        int vh = 0;
-        Speelveld.moveSpeler(speler, richting, vb, vh);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
     
+    /**
+     * Test of checkInBounds method, of class Speelveld.
+     */
+    @Test
+    public void testCheckInBoundsXRange() {
+        System.out.println("checkInBounds");
+        int x = 5;
+        int y = 0;
+        int vb = 10;
+        int vh = 10;
+        boolean expResult = true;
+        boolean result = Speelveld.checkInBounds(x, y, vb, vh);
+        assertEquals(expResult, result);
+    }
+    
+    /**
+     * Test of checkInBounds method, of class Speelveld.
+     */
+    @Test
+    public void testCheckInBoundsYRange() {
+        System.out.println("checkInBounds");
+        int x = 3;
+        int y = 9;
+        int vb = 10;
+        int vh = 10;
+        boolean expResult = true;
+        boolean result = Speelveld.checkInBounds(x, y, vb, vh);
+        assertEquals(expResult, result);
+    }
+    
+    /**
+     * Test of sleutel pickup, op dezelfde plek staand
+     */
+    @Test
+    public void checkSleutelOppakkenSameSpot() {
+        Vlak[][] vlakGrid = new Vlak[10][10];
+        boolean result = false;
+        
+        for(int i=0;i<10;i++) {     
+            for(int j=0;j<10;j++) {
+                vlakGrid[i][j] = new Vlak(i, j);
+            }
+        }
+        
+        vlakGrid[1][2].objects.add(new Sleutel(1,2,100));
+        
+        Speler speler = new Speler(1, 2);
+        
+        int speler_x = speler.getXpos();
+        int speler_y = speler.getYpos();
+        
+        for(VlakObject vlakobj : vlakGrid[speler_x][speler_y].objects) {
+            if(vlakobj instanceof Sleutel) {
+                result = true;
+                speler.setHuidigeSleutel(((Sleutel) vlakobj).getWaarde());
+                vlakGrid[speler_x][speler_y].objects.remove(0);
+            }
+        }
+        boolean expResult = true;
+        assertEquals(expResult, result);
+    }
 }

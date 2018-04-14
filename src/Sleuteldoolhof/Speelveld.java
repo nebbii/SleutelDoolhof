@@ -38,9 +38,6 @@ public class Speelveld {
             ImageIcon ImgSpeler     = new ImageIcon(imgpath+"Speler.png");
             ImageIcon ImgEindveld   = new ImageIcon(imgpath+"Eindveld.png");
             
-            System.out.println(imgpath);
-            System.out.println(ImgVasteMuur.getIconWidth());
-            
             panel.setLayout(new GridLayout(vlakbreedte, vlakhoogte+2, 5, 5));
             panel.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
         
