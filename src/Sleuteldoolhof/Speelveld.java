@@ -15,6 +15,7 @@ public class Speelveld {
     JFrame veldframe;
     static JLabel[][] vlakjlabel;
     static Vlak[][] vlakGrid;
+    static int huidigePuzzel;
     
     public static void main(String[] args) {
         int vlakbreedte = 10;
@@ -61,6 +62,67 @@ public class Speelveld {
         Speler speler = new Speler(1,1);
         
         loadPuzzle1(speler);
+        for(int i=0;i < vlakbreedte; i++) {
+                    for(int j=0; j < vlakhoogte; j++) {
+                        int waarde = 0; 
+                        switch(vlakGrid[i][j].returnTopContent()) {
+                            case 'V':
+//                                vlakjlabel[j][i].setText("V");
+                                vlakjlabel[j][i].setText(null);
+                                vlakjlabel[j][i].setIcon(ImgVasteMuur);
+                                break;
+                            case 'B':
+                                for(VlakObject vlakobj : vlakGrid[i][j].objects) {
+                                    if(vlakobj instanceof Barricade) {
+                                        waarde = ((Barricade) vlakobj).getSlotwaarde();
+                                    }
+                                }
+                                vlakjlabel[j][i].setIcon(ImgBarricade);
+                                vlakjlabel[j][i].setText("<html><font color='white'>"+waarde+"</font></html>");
+                                vlakjlabel[j][i].setHorizontalTextPosition(JLabel.CENTER);
+                                break;
+                            case 'b':
+                                vlakjlabel[j][i].setText(null);
+                                vlakjlabel[j][i].setIcon(ImgBroken);
+                                break;
+                            case 'S':
+                                vlakjlabel[j][i].setText(null);
+                                vlakjlabel[j][i].setIcon(ImgSpeler);
+                                if(speler.getHuidigeSleutel() > 0) {
+                                    vlakjlabel[j][i].setText("<html><font color='white'>"+speler.getHuidigeSleutel()+"</font></html>");
+                                    vlakjlabel[j][i].setHorizontalTextPosition(JLabel.CENTER);
+                                }
+                                break;
+                            case 's':
+                                for(VlakObject vlakobj : vlakGrid[i][j].objects) {
+                                    if(vlakobj instanceof Sleutel) {
+                                        waarde = ((Sleutel) vlakobj).getWaarde();
+                                    }
+                                }
+                                vlakjlabel[j][i].setIcon(ImgSleutel);
+                                vlakjlabel[j][i].setText("<html><font color='white'>"+waarde+"</font></html>");
+                                vlakjlabel[j][i].setHorizontalTextPosition(JLabel.CENTER);
+                                break;
+                            case 'E':
+                                vlakjlabel[j][i].setText(null);
+                                vlakjlabel[j][i].setIcon(ImgEindveld);
+                                break;
+                            case '.':
+                                vlakjlabel[j][i].setText(null);
+                                vlakjlabel[j][i].setIcon(ImgLeegvlak);
+                                break;
+                            default:
+                        }
+                    }
+                }
+        JOptionPane.showMessageDialog(veldframe, "<html>"
+                + "<h1>Welkom bij het Sleutel Doolhof!</h1>"
+                + "<b>Verplaats door het doolhof met de pijltoetsen.<br>"
+                + "Er zijn twee levels, deze kan je laden met de 1 en 2 toets.<br>"
+                + "Je kan opnieuw beginnen met de R toets!<br>"
+                + "Succes!<br>"
+                + "Gemaakt door Ben Wolthuis"
+                + "</html>");
         
         veldframe.addKeyListener(new KeyListener() {
             @Override
@@ -243,6 +305,8 @@ public class Speelveld {
     public static void loadPuzzle1(Speler speler) {
         Vlak[][] grid = new Vlak[10][10]; 
 
+        huidigePuzzel = 1;
+        
         for(int i=0;i<10;i++) {     
             for(int j=0;j<10;j++) {
                 grid[i][j] = new Vlak(i, j);
@@ -261,13 +325,18 @@ public class Speelveld {
             grid[1][i].objects.add(new VasteMuur());
         }
         for(int i=2;i<10;i++) {
-            grid[2][i].objects.add(new Barricade(100, true));
+            grid[2][i].objects.add(new Barricade(300, true));
         }
 
         grid[3][6].objects.add(new VasteMuur());
         grid[4][6].objects.add(new VasteMuur());
+        grid[5][6].objects.add(new VasteMuur());
+        
+        grid[5][7].objects.add(new VasteMuur());
+        grid[5][8].objects.add(new VasteMuur());
+        grid[5][9].objects.add(new VasteMuur());
 
-        grid[3][4].objects.add(new Barricade(100, true));
+        grid[3][4].objects.add(new Barricade(300, true));
 
         grid[7][0].objects.add(new Barricade(100, true));
         grid[8][0].objects.add(new Barricade(100, true));
@@ -291,6 +360,7 @@ public class Speelveld {
 
         grid[4][1].objects.add(new Sleutel(4, 1, 100));
         grid[5][1].objects.add(new Sleutel(5, 1, 300));
+        grid[5][5].objects.add(new Sleutel(5, 1, 500));
         grid[0][8].objects.add(new Sleutel(0, 8, 200));
         grid[9][2].objects.add(new Sleutel(9, 2, 300));
 
@@ -302,6 +372,8 @@ public class Speelveld {
     public static void loadPuzzle2(Speler speler) {
         Vlak[][] grid = new Vlak[10][10]; 
 
+        huidigePuzzel = 2;
+        
         for(int i=0;i<10;i++) {     
             for(int j=0;j<10;j++) {
                 grid[i][j] = new Vlak(i, j);
