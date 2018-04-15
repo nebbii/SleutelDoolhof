@@ -169,17 +169,7 @@ public class Speelveld {
                         System.out.println(speler.getXpos()+""+speler.getYpos());
                         break;
                     case 82: // R
-                        System.out.println("Game Reset!");
-                        switch(huidigePuzzel) {
-                            case 1:
-                                Speelveld.loadPuzzle1(speler);
-                                break;
-                            case 2:
-                                Speelveld.loadPuzzle2(speler);
-                                break;
-                            default:
-                                Speelveld.loadPuzzle1(speler);
-                        }
+                        reset(speler);
                         break;
                     default:
                 }
@@ -190,7 +180,7 @@ public class Speelveld {
                 if(checkWin(speler)) {
                     System.out.println("Doolhof gehaald!!!");
                     JOptionPane.showMessageDialog(veldframe, "Doolhof gehaald!");
-                    loadPuzzle1(speler);
+                    reset(speler);
                 }
                 renderCmd(vlakGrid);
                 for(int i=0;i < vlakbreedte; i++) {
@@ -268,13 +258,18 @@ public class Speelveld {
     /**
      * Clear alles
      */
-    public static void reset() {
-        for(int i=0;i<vlakbreedte;i++) {     
-            for(int j=0;j<vlakhoogte;j++) {
-                vlakjlabel[j][i].setText("999");
-                vlakjlabel[j][i].setIcon(null);
-            }
-        } 
+    public static void reset(Speler speler) {
+        System.out.println("Game Reset!");
+        switch(huidigePuzzel) {
+            case 1:
+                Speelveld.loadPuzzle1(speler);
+                break;
+            case 2:
+                Speelveld.loadPuzzle2(speler);
+                break;
+            default:
+                Speelveld.loadPuzzle1(speler);
+        }
     }
     
     public static void renderCmd(Vlak[][] vlakGrid) {
