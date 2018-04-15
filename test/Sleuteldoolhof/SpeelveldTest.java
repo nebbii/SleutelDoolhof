@@ -42,7 +42,7 @@ public class SpeelveldTest {
      */
     @Test
     public void testCheckInBoundsMinusX() {
-        System.out.println("checkInBounds");
+        System.out.println("testCheckInBoundsMinusX");
         int x = -2;
         int y = 0;
         int vb = 10;
@@ -72,7 +72,7 @@ public class SpeelveldTest {
      */
     @Test
     public void testCheckInBoundsXRange() {
-        System.out.println("checkInBounds");
+        System.out.println("testCheckInBoundsXRange");
         int x = 5;
         int y = 0;
         int vb = 10;
@@ -98,34 +98,22 @@ public class SpeelveldTest {
     }
     
     /**
-     * Test of sleutel pickup, op dezelfde plek staand
+     * Test of moveSpeler method, of class Speelveld.
      */
     @Test
-    public void checkSleutelOppakkenSameSpot() {
-        Vlak[][] vlakGrid = new Vlak[10][10];
-        boolean result = false;
-        
-        for(int i=0;i<10;i++) {     
-            for(int j=0;j<10;j++) {
-                vlakGrid[i][j] = new Vlak(i, j);
-            }
-        }
-        
-        vlakGrid[1][2].objects.add(new Sleutel(1,2,100));
-        
-        Speler speler = new Speler(1, 2);
-        
-        int speler_x = speler.getXpos();
-        int speler_y = speler.getYpos();
-        
-        for(VlakObject vlakobj : vlakGrid[speler_x][speler_y].objects) {
-            if(vlakobj instanceof Sleutel) {
-                result = true;
-                speler.setHuidigeSleutel(((Sleutel) vlakobj).getWaarde());
-                vlakGrid[speler_x][speler_y].objects.remove(0);
-            }
-        }
+    public void testMoveSpeler() {
+        System.out.println("moveSpeler");
+        Speler speler = new Speler(0,0);
+        Speelveld.loadPuzzle1(speler);
+        String richting = "down";
+        int vb = 10;
+        int vh = 10;
+        Speelveld.moveSpeler(speler, richting, vb, vh);
         boolean expResult = true;
+        boolean result = (speler.getYpos()==1);
+        
         assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        //fail("The test case is a prototype.");
     }
 }
