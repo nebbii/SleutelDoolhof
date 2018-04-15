@@ -170,7 +170,16 @@ public class Speelveld {
                         break;
                     case 82: // R
                         System.out.println("Game Reset!");
-                        Speelveld.loadPuzzle1(speler);
+                        switch(huidigePuzzel) {
+                            case 1:
+                                Speelveld.loadPuzzle1(speler);
+                                break;
+                            case 2:
+                                Speelveld.loadPuzzle2(speler);
+                                break;
+                            default:
+                                Speelveld.loadPuzzle1(speler);
+                        }
                         break;
                     default:
                 }
@@ -359,9 +368,7 @@ public class Speelveld {
         grid[7][6].objects.add(new VasteMuur());
 
         grid[4][1].objects.add(new Sleutel(4, 1, 100));
-        grid[5][1].objects.add(new Sleutel(5, 1, 300));
         grid[5][5].objects.add(new Sleutel(5, 1, 500));
-        grid[0][8].objects.add(new Sleutel(0, 8, 200));
         grid[9][2].objects.add(new Sleutel(9, 2, 300));
 
         grid[9][9].objects.add(new Eindveld(9,9));
