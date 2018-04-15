@@ -116,4 +116,27 @@ public class SpeelveldTest {
         // TODO review the generated test code and remove the default call to fail.
         //fail("The test case is a prototype.");
     }
+    /**
+     * Test of moveSpeler method, of class Speelveld.
+     * De speler loopt 100 richting het eind, maar er staat een barricade in de weg.
+     * Het verwachtte resultaat is dat de speler er niet doorheen komt
+     */
+    @Test
+    public void testMoveSpelerTegenBarricade() {
+        System.out.println("moveSpeler");
+        Speler speler = new Speler(0,0);
+        Speelveld.loadPuzzle2(speler);
+        String richting = "right";
+        int vb = 10;
+        int vh = 10;
+        for(int i=0;i<100;i++) {
+            Speelveld.moveSpeler(speler, richting, vb, vh);
+        }
+        boolean expResult = true;
+        boolean result = (speler.getXpos()==7);
+        
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        //fail("The test case is a prototype.");
+    }
 }
