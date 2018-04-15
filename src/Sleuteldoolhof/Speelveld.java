@@ -253,6 +253,7 @@ public class Speelveld {
         veldframe.setVisible(true);
         veldframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         veldframe.setSize(700, 700);
+        veldframe.setResizable(false);
    }  
 
     /**
