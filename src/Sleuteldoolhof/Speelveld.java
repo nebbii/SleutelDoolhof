@@ -163,7 +163,7 @@ public class Speelveld {
                         Speelveld.loadPuzzle2(speler);
                         break;
                     case 51: // 3
-                        
+                        Speelveld.loadPuzzle3(speler);
                         break;
                     case 65: // A
                         System.out.println(speler.getXpos()+""+speler.getYpos());
@@ -180,6 +180,12 @@ public class Speelveld {
                 if(checkWin(speler)) {
                     System.out.println("Doolhof gehaald!!!");
                     JOptionPane.showMessageDialog(veldframe, "Doolhof gehaald!");
+                    if(huidigePuzzel >= 3) {
+                        huidigePuzzel=1;
+                        JOptionPane.showMessageDialog(veldframe, "<html>Je hebt het spel uitgespeeld. Gefeliciteerd!<br>Bedankt voor het spelen van mijn spel.</html>");
+                    } else {
+                        huidigePuzzel++;
+                    }
                     reset(speler);
                 }
                 renderCmd(vlakGrid);
@@ -269,7 +275,7 @@ public class Speelveld {
                 Speelveld.loadPuzzle2(speler);
                 break;
             case 3:
-                Speelveld.loadPuzzle2(speler);
+                Speelveld.loadPuzzle3(speler);
                 break;
             default:
                 Speelveld.loadPuzzle1(speler);
@@ -427,8 +433,39 @@ public class Speelveld {
                 grid[i][j] = new Vlak(i, j);
             }
         }
-
-        speler.setXpos(1); speler.setYpos(1); speler.setHuidigeSleutel(0);
+        
+        speler.setXpos(0); speler.setYpos(0); speler.setHuidigeSleutel(0);
+        grid[speler.getXpos()][speler.getYpos()].objects.add(speler);
+        
+        for(int i=0;i<10;i++) {     
+            for(int j=0;j<10;j++) {
+                if(i<3 && j<3) {
+                    continue;
+                }
+                if(i==9 && j==9) {
+                    continue;
+                }
+                int item = (int)(Math.random() * 3);
+                int slot = (int)(Math.random() * 1000);
+                switch(item) {
+                    case 0:
+                        grid[i][j].objects.add(new VasteMuur());
+                        break;
+                    case 1:
+                        grid[i][j].objects.add(new Barricade(slot, true));
+                        break;
+                    case 2:
+                        grid[i][j].objects.add(new Sleutel(i, j, slot));
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+        
+        grid[9][9].objects.add(new Eindveld(9,9));
+        
+        Speelveld.vlakGrid = grid;
     }
    
     /**
