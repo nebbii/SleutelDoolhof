@@ -268,6 +268,9 @@ public class Speelveld {
             case 2:
                 Speelveld.loadPuzzle2(speler);
                 break;
+            case 3:
+                Speelveld.loadPuzzle2(speler);
+                break;
             default:
                 Speelveld.loadPuzzle1(speler);
         }
@@ -281,31 +284,6 @@ public class Speelveld {
             System.out.println("|");
         } 
     }
-   
-    /*public static void loadPuzzleFromGrid(String[][] template, Speler speler) {
-        Vlak[][] grid = new Vlak[10][10];
-        for(int i=0;i<10;i++) {     
-            for(int j=0;j<10;j++) {
-                grid[i][j] = new Vlak(i, j);
-                switch(template[i][j]) {
-                    case "VasteMuur":
-                        grid[i][j].objects.add(new VasteMuur());
-                        break;
-                    case "Sleutel":
-                        grid[i][j].objects.add(new Steutel());
-                        break;
-                    case "Speler":
-                        speler.setXpos(i);
-                        speler.setYpos(j);
-                        grid[i][j].objects.add(new VasteMuur());
-                        break;
-                   case "Eindveld":
-                       grid[i][j].objects.add(new Eindveld(i, j));
-                       break;
-                }
-            }
-        }
-    }*/
     
     public static void loadPuzzle1(Speler speler) {
         Vlak[][] grid = new Vlak[10][10]; 
@@ -437,6 +415,20 @@ public class Speelveld {
         grid[9][1].objects.add(new Eindveld(9,1));
 
         Speelveld.vlakGrid = grid;
+    }
+    
+    public static void loadPuzzle3(Speler speler) {
+        Vlak[][] grid = new Vlak[10][10]; 
+
+        huidigePuzzel = 3;
+        
+        for(int i=0;i<10;i++) {     
+            for(int j=0;j<10;j++) {
+                grid[i][j] = new Vlak(i, j);
+            }
+        }
+
+        speler.setXpos(1); speler.setYpos(1); speler.setHuidigeSleutel(0);
     }
    
     /**
